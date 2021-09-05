@@ -112,7 +112,27 @@ export const Paragraph = () => {
   );
 };
 export const FileUpload = () => {
-  return <div></div>;
+  return (
+    <div className="  pl-5 " style={{ height: "320px" }}>
+      <input
+        className="text-xl w-full text_color_secondary leading-6 mb-3"
+        placeholder="Enter the Question here"
+      />
+      <hr className="mb-1" />
+
+      <div
+        className="w-100  flex justify-center items-center my-2.5 mt-5 p-4 border-0"
+        id="1-option-1"
+        style={{
+          width: "100%",
+          height: "214px",
+          color: "#BF9B9B",
+        }}
+      >
+        <div className="text-5xl">File Upload</div>
+      </div>
+    </div>
+  );
 };
 
 const QuestionComponent = () => {
@@ -164,7 +184,7 @@ const QuestionComponent = () => {
       </div>
       <div style={{ borderLeft: "1px solid #733D47" }}></div>
       <div className="w-8/12">
-        <Paragraph />
+        <FileUpload />
       </div>
     </div>
   );
