@@ -34,7 +34,7 @@ export const SingleChoice = () => {
   let options = [];
   return (
     <div>
-      <div className="  pl-5 ">
+      <div className="relative  pl-5 ">
         <input
           className="text-xl w-full text_color_secondary leading-6 mb-3"
           placeholder="Enter the Question here"
@@ -89,7 +89,10 @@ export const SingleChoice = () => {
 
 export const Paragraph = () => {
   return (
-    <div className="  pl-5 " style={{ height: "320px" }}>
+    <div className="relative  pl-5 " style={{ height: "320px" }}>
+      <div className="absolute" style={{ top: "0", right: "-15px" }}>
+        <img src={"/svg/remove.svg"} alt="remove" />
+      </div>
       <input
         className="text-xl w-full text_color_secondary leading-6 mb-3"
         placeholder="Enter the Question here"
@@ -111,9 +114,23 @@ export const Paragraph = () => {
     </div>
   );
 };
+const OR = () => {
+  return (
+    <div
+      className="text-3xl text-center"
+      style={{
+        lineHeight: "36px",
+
+        color: "#BF9B9B",
+      }}
+    >
+      OR
+    </div>
+  );
+};
 export const FileUpload = () => {
   return (
-    <div className="  pl-5 " style={{ height: "320px" }}>
+    <div className=" relative pl-5 " style={{ height: "320px" }}>
       <input
         className="text-xl w-full text_color_secondary leading-6 mb-3"
         placeholder="Enter the Question here"
@@ -184,7 +201,7 @@ const QuestionComponent = () => {
       </div>
       <div style={{ borderLeft: "1px solid #733D47" }}></div>
       <div className="w-8/12">
-        <FileUpload />
+        <Paragraph />
       </div>
     </div>
   );
@@ -193,7 +210,6 @@ const QuestionComponent = () => {
 const QuestionComponents = () => {
   return (
     <div>
-      <QuestionComponent />
       <QuestionComponent />
     </div>
   );
