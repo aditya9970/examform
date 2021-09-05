@@ -96,13 +96,18 @@ export const Paragraph = () => {
       />
       <hr className="mb-1" />
 
-      <div className="flex items-center relative my-2.5 ">
-        <textarea
-          className="w-100 flex-auto border mt-2.5"
-          id="1-option-1"
-          style={{ height: "214px" }}
-        ></textarea>
-      </div>
+      <textarea
+        className="w-100  border my-2.5 mt-5 p-4 rounded"
+        id="1-option-1"
+        placeholder="Paragraph"
+        style={{
+          width: "100%",
+          height: "214px",
+          color: "#BF9B9B",
+          resize: "none",
+          background: "rgba(242, 216, 213, 0.63)",
+        }}
+      ></textarea>
     </div>
   );
 };
