@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
+import { StoreContext } from "../Context/storeContext";
 
 const SideBar = () => {
+  const { dispatch } = useContext(StoreContext);
   return (
     <>
       <ul
@@ -21,6 +23,7 @@ const SideBar = () => {
               width: "20px",
             }}
             alt="add"
+            onClick={() => dispatch({ type: "add_Question" })}
           />
         </li>
         <li
