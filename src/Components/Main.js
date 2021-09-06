@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer } from "react";
+import React, { useReducer } from "react";
 import { StoreContext } from "../Context/storeContext";
 import { isSelected } from "../helpers/isSelected";
 import { storeReducer } from "../reducer/storeReducer";
@@ -10,24 +10,20 @@ const Main = () => {
   const [store, dispatch] = useReducer(storeReducer, {
     sections: [
       {
-        sectionNo: 0,
         sectionTitle: "",
         sectionDescription: "",
+        shuffle: false,
         questions: [
           {
-            sectionNo: 0,
-            questionNo: 0,
             questionType: "singleChoice",
-            TotalMarks: null,
-            NegativeMarks: null,
-            Mandatory: null,
+            totalMarks: null,
+            negativeMarks: null,
+            mandatory: null,
             subquestions: [
               {
-                sectionNo: 0,
-                questionNo: 0,
-                subquestionNo: 0,
+                subquestionContent: [{ content: "" }],
+                correct: 0,
                 subquestionTitle: "",
-                subquestionContent: [{ a: {}, b: {}, c: {}, correct: {} }],
               },
             ],
           },
@@ -35,38 +31,7 @@ const Main = () => {
       },
     ],
   });
-  const example = {
-    sections: [
-      {
-        sectionNo: 0,
-        sectionTitle: "",
-        sectionDescription: "",
-        questions: [
-          {
-            sectionNo: 0,
-            questionNo: 0,
-            questionType: "Single Choice/ParaGraph/FileUpload",
-            TotalMarks: null,
-            NegativeMarks: null,
-            Mandatory: null,
-            subquestions: [
-              {
-                sectionNo: 0,
-                questionNo: 0,
-                subquestionNo: 0,
-                subquestionTitle: "",
-                subquestionContent: [{ a: {}, b: {}, c: {}, correct: {} }],
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  };
 
-  useEffect(() => {
-    dispatch({ type: "init" });
-  }, []);
   return (
     <StoreContext.Provider value={{ store, dispatch }}>
       <div className="color_bg_page">
@@ -93,6 +58,18 @@ const Main = () => {
             {store.sections.map((section, i) => {
               return (
                 <>
+                  {i > 0 && (
+                    <div
+                      className="text-3xl  my-5 text-center"
+                      style={{
+                        lineHeight: "36px",
+
+                        color: "#BF9B9B",
+                      }}
+                    >
+                      Sections Break
+                    </div>
+                  )}
                   <div
                     className="flex mx-auto items-center xl:w-3/4 lg:w-9/12 md:full"
                     key={section.sectionNo}
@@ -113,7 +90,6 @@ const Main = () => {
                     </div>
                   </div>
                   {section.questions.map((question, j) => {
-                    console.log(question);
                     return (
                       <div
                         className="flex mx-auto items-center xl:w-3/4 lg:w-9/12 md:full"

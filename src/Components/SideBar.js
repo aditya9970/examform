@@ -15,6 +15,7 @@ const SideBar = () => {
             height: "22px",
             width: "22px",
           }}
+          onClick={() => dispatch({ type: "add_Question" })}
         >
           <img
             src={"/svg/add.svg"}
@@ -23,7 +24,6 @@ const SideBar = () => {
               width: "20px",
             }}
             alt="add"
-            onClick={() => dispatch({ type: "add_Question" })}
           />
         </li>
         <li
@@ -48,6 +48,7 @@ const SideBar = () => {
             height: "22px",
             width: "22px",
           }}
+          onClick={() => dispatch({ type: "copy_Question" })}
         >
           <img
             src={"/svg/copy.svg"}
@@ -64,6 +65,7 @@ const SideBar = () => {
             height: "22px",
             width: "22px",
           }}
+          onClick={() => dispatch({ type: "remove_Question" })}
         >
           <img
             src={"/svg/delete.svg"}
@@ -90,6 +92,7 @@ const SideBar = () => {
               height: "21px",
               width: "10px",
             }}
+            onClick={() => dispatch({ type: "add_Section" })}
             alt="add"
           />
         </li>

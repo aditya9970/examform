@@ -1,5 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { StoreContext } from "../Context/storeContext";
+import { numberToString } from "../helpers/numberToString";
 
 export const SingleChoice = ({
   subquestion,
@@ -9,56 +10,80 @@ export const SingleChoice = ({
   j,
   k,
 }) => {
-  const [state, setState] = useState("");
-  const optionComp = () => {
-    subquestion.subquestionContent.map((data) => {
-      return (
-        <div className="flex items-center relative">
-          <input type="checkbox" className=" w-5 h-5 mr-5" id="1-option-1" />
-          <div
-            className=" h-10 w-full flex items-between items-center color_bg_primary  "
-            style={{ padding: "0 5px", borderRadius: "3px" }}
-          >
-            <div
-              className="w-8 h-8 text-sm leading-8 text-center text_color_light color_bg_secondary"
-              style={{ borderRadius: "5px" }}
-            >
-              A
-            </div>
-            <div className="text-sm mx-5">OptionName</div>
-          </div>
-          <div
-            className="w-5 h-5  rounded-full  text_color_light text-center "
-            style={{
-              position: "absolute",
-              right: "10px",
-              top: "10px",
-              background: "#BF9B9B",
-              fontSize: "13px",
-              fontWeight: "bold",
-            }}
-          >
-            x
-          </div>
-          <div
-            className="w-5 h-5  rounded-full  text_color_light text-center "
-            style={{
-              position: "absolute",
-              right: "10px",
-              top: "10px",
-              background: "#BF9B9B",
-              fontSize: "13px",
-              fontWeight: "bold",
-            }}
-          >
-            x
-          </div>
-        </div>
-      );
+  const { dispatch } = useContext(StoreContext);
+  const [state, setState] = useState({
+    subquestionTitle: "",
+    subquestionContent: [],
+    correct: 0,
+  });
+  const [temp, setTemp] = useState("");
+  useEffect(() => {
+    setState({
+      subquestionTitle: "",
+      subquestionContent: [],
+      correct: 0,
     });
+    setTemp("");
+  }, []);
+  useEffect(() => {
+    dispatch({ type: "", i, j, k, data: state });
+  }, [state]);
+
+  const handleAdd = () => {
+    setState({
+      ...state,
+      subquestionContent: [...state.subquestionContent, { content: temp }],
+    });
+    setTemp("");
   };
 
-  const handleChange = (id) => (e) => {};
+  const handleRemove = (l) => {
+    let arr = state.subquestionContent;
+    arr.splice(i, 1);
+    setState({ ...state, subquestionContent: [...arr] });
+  };
+  const handleChange = (e) => {
+    setTemp(e.target.value);
+  };
+  const optionComp = (data, l) => {
+    return (
+      <div className="flex items-center relative">
+        <input type="checkbox" className=" w-5 h-5 mr-5" id="1-option-1" />
+        <div
+          className=" h-10 w-full flex items-between items-center color_bg_light my-2  "
+          style={{
+            padding: "0 5px",
+            borderRadius: "5px",
+            border: "1px solid rgba(191, 155, 155, 0.3)",
+          }}
+        >
+          <div
+            className="w-8 h-8 text-sm leading-8 text-center text_color_light color_bg_secondary"
+            style={{ borderRadius: "5px" }}
+          >
+            {numberToString(l)}
+          </div>
+          <div className="text-sm mx-5">{data.content}</div>
+        </div>
+
+        <div
+          className="w-5 h-5  rounded-full  text_color_light text-center "
+          style={{
+            position: "absolute",
+            right: "10px",
+            top: "10px",
+            background: "#BF9B9B",
+            fontSize: "13px",
+            fontWeight: "bold",
+          }}
+          onClick={() => handleRemove(l)}
+        >
+          x
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div>
       <div className="relative  pl-5 ">
@@ -78,14 +103,12 @@ export const SingleChoice = ({
               fontSize: "13px",
               fontWeight: "bold",
             }}
-            onClick={removeOptional}
+            onClick={() => removeOptional()}
           >
             -
           </div>
         )}
-        {subquestion.subquestionContent.map((subquestionContent) =>
-          optionComp(subquestionContent)
-        )}
+        {state.subquestionContent.map((option, l) => optionComp(option, l))}
         <div>
           <div className="flex items-center relative my-2.5">
             <div
@@ -105,13 +128,28 @@ export const SingleChoice = ({
                 className="w-8 h-8 text-sm leading-8 text-center text_color_light color_bg_secondary"
                 style={{ borderRadius: "3px" }}
               >
-                A
+                {numberToString(state.subquestionContent.length)}
               </div>
               <input
-                className="text-sm mx-5 border-0 w-full"
+                className="text-sm mx-5 border-0 w-9/12"
                 placeholder="OptionName"
-                onChange={handleChange("0")}
+                onChange={handleChange}
+                value={temp}
               />
+              <div
+                className="w-5 h-5  rounded-full  text_color_light text-center "
+                style={{
+                  position: "absolute",
+                  right: "10px",
+                  top: "10px",
+                  background: "#BF9B9B",
+                  fontSize: "13px",
+                  fontWeight: "bold",
+                }}
+                onClick={handleAdd}
+              >
+                &#10003;
+              </div>
             </div>
           </div>
         </div>
@@ -231,13 +269,13 @@ const QuestionComponents = ({ question, i, j }) => {
   const handleChange = (name) => (e) => {
     let temp = { ...question };
     temp[name] = e.target.value;
-    dispatch({ type: "change_Type", payload: temp });
+    dispatch({ type: "change_Type", payload: { temp, i, j } });
   };
   const addOptional = (e) => {
-    dispatch({ type: "add_Subquestion", payload: question });
+    dispatch({ type: "add_Subquestion", payload: { i, j } });
   };
-  const removeOptional = (index) => (e) => {
-    dispatch({ type: "remove_Subquestion", payload: { question, index } });
+  const removeOptional = (k) => (e) => {
+    dispatch({ type: "remove_Subquestion", payload: { i, j, k } });
   };
   const handleSelection = () => {
     dispatch({ type: "change_Selected", payload: { i, j } });

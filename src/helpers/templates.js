@@ -2,18 +2,12 @@ export const templates = (type, i, j, k) => {
   switch (type) {
     case "singleChoice":
       return {
-        sectionNo: i,
-        questionNo: j,
-
         questionType: "singleChoice",
         totalMarks: null,
         negativeMarks: null,
         mandatory: null,
         subquestions: [
           {
-            sectionNo: i,
-            questionNo: j,
-            subquestionNo: 0,
             subquestionContent: [{ content: "" }],
             correct: 0,
             subquestionTitle: "",
@@ -22,23 +16,54 @@ export const templates = (type, i, j, k) => {
       };
     case "paragraph":
       return {
-        sectionNo: i,
-        questionNo: j,
-        subquestionNo: k,
-        subquestionTitle: "",
-        subquestionContent: [{ content: "" }],
-        correct: 0,
+        questionType: "paragraph",
+        totalMarks: null,
+        negativeMarks: null,
+        mandatory: null,
+        subquestions: [
+          {
+            subquestionContent: [{ content: "" }],
+            correct: 0,
+            subquestionTitle: "",
+          },
+        ],
       };
-    case "fileupload":
+    case "fileUpload":
       return {
-        sectionNo: i,
-        questionNo: j,
-        subquestionNo: k,
-        subquestionTitle: "",
-        subquestionContent: [{ content: "" }],
-        correct: 0,
+        questionType: "fileUpload",
+        totalMarks: null,
+        negativeMarks: null,
+        mandatory: null,
+        subquestions: [
+          {
+            subquestionContent: [{ content: "" }],
+            correct: 0,
+            subquestionTitle: "",
+          },
+        ],
       };
-
+    case "section": {
+      return {
+        sectionTitle: "",
+        sectionDescription: "",
+        shuffle: false,
+        questions: [
+          {
+            questionType: "singleChoice",
+            totalMarks: null,
+            negativeMarks: null,
+            mandatory: null,
+            subquestions: [
+              {
+                subquestionContent: [{ content: "" }],
+                correct: 0,
+                subquestionTitle: "",
+              },
+            ],
+          },
+        ],
+      };
+    }
     default:
       return {};
   }
